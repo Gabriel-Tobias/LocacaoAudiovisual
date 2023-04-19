@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Colégio Vencer Sempre</title>
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+    <style>
+        * { padding: 0; margin: 0; }
+        
+        /* CABEÇALHO */
+        .cabecalho {
+            background-color: rgb(126, 38, 38);
+            text-align: center;
+            padding: 30px;
+        }
+        .titulo { color: cornsilk; font-family: monospace, Arial; }
+        
+        /* CONTEÚDO */
+        .conteudo {
+            min-height: 100vh;
+            padding: 20px 80px;
+            background-color: lightsteelblue ;
+        }
+        .conteudo__cabecalho { color: rgb(139, 24, 24); font: 800 20px Arial; margin-bottom: 10px;}
+        
+        /* PRODUTO */
+        .produto__container {
+            display: grid;
+            grid-template-columns: auto auto auto auto;
+            justify-content: space-between;
+            row-gap: 30px;
+            column-gap: 30px;
+            padding: 0 20px;
+        }
+        .produto {
+            background-color: #efefef;
+            width: 250px;
+            border-radius: 10px;
+            padding: 10px;
+            font-size: 18px;
+            text-align: center;
+        }
+        .produto__img { width: 180px; }
+        .produto__nome { font: 500 19px Arial }
+        .produto__preco { text-align: left; margin: 10px; font: 700 20px Arial; }
+        
+        /* RODAPÉ */
+        .rodape {
+            background-color: rebeccapurple;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        var loja = {
+            nomeApp: "Colegio Vencer Sempre",
+            autor: "TB Tech"
+        };
+        
+        class ProdutoFactory {
+            constructor(nome, disponibilidade, img) {
+                this.nome = nome;
+                this.disponibilidade = disponibilidade;
+                this.img = img;
+            }
+        }
+
+        var produto1 = new ProdutoFactory("Caixa de som", 'disponivel', "img/p1.jpg");
+        var produto2 = new ProdutoFactory("Camera fotografica", 'disponivel', "img/p2.jpg");
+        var produto3 = new ProdutoFactory("Chroma key", 'disponivel', "img/p3.jpg");
+        var produto4 = new ProdutoFactory("Microfone", 'disponivel', "img/p5.jpg");
+        var produto5 = new ProdutoFactory("Camera filmadora", 'disponivel', "img/p6.jpg");
+        var produto6 = new ProdutoFactory("KIt iluminaçao", 'disponivel', "img/P4.jpeg");
+        var produto7 = new ProdutoFactory("Datashow", 'disponivel', "img/p7.jpg");
+        var produto8 = new ProdutoFactory("Tela para projeção ", 'disponivel', "img/p8.jpg");
+
+        // retorna o cabeçalho
+        function Header(props) {
+            return (
+                <header className="cabecalho">
+                    <h1 className="titulo">{props.nomeApp}</h1>    
+                </header>
+            );
+        }
+
+        // retorna o elemento que representa o produto
+        function Produto(props) {
+            return (
+                <div className="produto">
+                    <img className="produto__img" src={props.produto.img} alt="produto"/>
+                    <p className="produto__nome">{props.produto.nome}</p>
+                    <p className="produto__preco"> {props.produto.preco}</p>    
+                </div>
+            );
+        }
+
+        // retorna a principal área de conteúdo
+        function Content(props) {
+            var produtos = [];
+            for (let x=0; x<props.produtos.length; x++) {
+                produtos.push(<Produto produto={props.produtos[x]} />);
+            }
+            return (
+                <main className="conteudo">
+                    <h2 className="conteudo__cabecalho">Equipamentos Disponiveis.</h2>
+                    <section className="produto__container">
+                        {produtos}
+                    </section>    
+                </main>
+            );
+        }
+
+        // retorna o rodapé
+        function Footer(props) {
+            return (
+                <footer className="rodape">
+                    <p>Desenvolvido por {props.autor}</p>    
+                </footer>
+            );
+        }
+
+        // componente principal
+        function App(props) {
+            return (
+                <div>
+                    <Header nomeApp={props.loja.nomeApp}/>
+                    <Content produtos={props.produtos}/>
+                    <Footer autor={props.loja.autor} />
+                </div>
+            );
+        }
+
+        // retorna o elemento que representa o produto
+        function Produto(props) {
+    // Função para exibir um alerta com o nome do produto
+         function exibirAlerta() {
+        alert('Produto: ' + props.produto.nome + `\n agora o produto está em sua responsabilidade por 3 dias `);
+     }
+
+    return (
+        <div className="produto">
+            <img className="produto__img" src={props.produto.img} alt="produto" onClick={exibirAlerta}/>
+            <p className="produto__nome">{props.produto.nome}</p>
+            <p>{props.produto.disponibilidade}</p>
+        </div>
+    );
+}
+
+
+        const element = <App loja={loja} produtos={[produto1, produto2, produto3, produto4, produto5, produto6, produto7, produto8]}/>;
+        ReactDOM.render(element, document.getElementById("root"));
+    </script>
+</body>
+
+</html>
